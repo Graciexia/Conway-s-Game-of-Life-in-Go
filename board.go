@@ -5,7 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"strings"
-	//"time"
+	"time"
 )
 
 
@@ -53,12 +53,12 @@ func (b *Board) initialize(rows, columns int) {
 		b.cells_current[i] = make([]Cell, b.cols)
 		b.cells_copy[i] = make([]Cell, b.cols)
 	}
-	for row_index := range b.cells_current {
-		for col_index := range b.cells_current[row_index] {
-			b.cells_current[row_index][col_index].kill()
-			b.cells_copy[row_index][col_index].kill()
-		}
-	}
+	//for row_index := range b.cells_current {
+	//	for col_index := range b.cells_current[row_index] {
+	//		b.cells_current[row_index][col_index].kill()
+	//		b.cells_copy[row_index][col_index].kill()
+	//	}
+	//}
 }
 
 func (b *Board) set_living_cells(cell_coords [][]int) {
@@ -143,24 +143,15 @@ func main() {
 	board.initialize(10,16)
 	 //set up initial board configuration
 	 //Pentadecathlon
-	//board.set_living_cells([][]int{{3,5}, {3,10}, {4,3}, {4,4}, {4,6}, {4,7}, {4,8}, {4,9}, {4,11}, {4,12}, {5,5}, {5,10}})
+	board.set_living_cells([][]int{{3,5}, {3,10}, {4,3}, {4,4}, {4,6}, {4,7}, {4,8}, {4,9}, {4,11}, {4,12}, {5,5}, {5,10}})
 	 //Glider
-	board.set_living_cells([][]int{{2,1}, {2,2}, {2,3}, {1,3}, {0,2}})
-	//board.print_board()
-	//for i := 0; i < 100; i++ {
-	//	time.Sleep(10 * time.Millisecond)
-	//	board.change_life()
-	//	board.print_board()
-	//}
-
-	//var s = fmt.Sprint(board.cells_current)
-	//fmt.Println(s)
-	//board.set_living_cells([][]int{{0,0},{1,1},{2,2}})
-	////board.make_cell_alive(1,1)
-	//a := board.live_sum(0,0)
-	//fmt.Println(board.cells_current)
-	fmt.Println(board.live_sum(2,3))
-
+	//board.set_living_cells([][]int{{2,1}, {2,2}, {2,3}, {1,3}, {0,2}})
+	board.print_board()
+	for i := 0; i < 100; i++ {
+		time.Sleep(10 * time.Millisecond)
+		board.change_life()
+		board.print_board()
+	}
 }
 
 
