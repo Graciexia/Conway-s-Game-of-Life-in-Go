@@ -5,13 +5,13 @@ The final solution will be executable in some format and, ideally, will include 
 I started at 11:30 PM Feb 13rd
 
 ## Problem Approach
-#### analyze the problem to be resolved, as well as constraints (time, tools, etc.)
-#### look at different languages and determine which one to use
-#### learn about language
-#### download development tools (including IDE)
-#### set-up development environment and validate correctness
-#### research and decide on algorithmic approach
-#### write code
+##### analyze the problem to be resolved, as well as constraints (time, tools, etc.)
+##### look at different languages and determine which one to use
+##### learn about language
+##### download development tools (including IDE)
+##### set-up development environment and validate correctness
+##### research and decide on algorithmic approach
+##### write code
 * determine objects for object oriented design
 * start creating basic object and methods
 * test methods as they are developed
