@@ -5,14 +5,13 @@ import (
 	"os"
 	"os/exec"
 	"strings"
-	"time"
+	//"time"
 )
 
 
 type Cell struct {
 	status int
 }
-
 func (c *Cell) make_alive() {
 	c.status = 1
 }
@@ -62,6 +61,12 @@ func (b *Board) initialize(rows, columns int) {
 	}
 }
 
+func (b *Board) set_living_cells(cell_coords [][]int) {
+	for _, coord := range cell_coords {
+		b.make_cell_alive(coord[0], coord[1])
+	}
+}
+
 func (b *Board) make_cell_alive(row_index, col_index int) {
 	b.cells_current[row_index][col_index].make_alive()
 }
@@ -95,13 +100,6 @@ func (b *Board) make_live_or_kill(row_index, col_index int) {
 	}
 }
 
-func (b *Board) copy_cells() {
-	for row_index := range b.cells_current {
-		for col_index := range b.cells_current[row_index] {
-			b.cells_copy[row_index][col_index].copy_cell_data(b.cells_current[row_index][col_index])
-		}
-	}
-}
 
 func (b *Board) change_life() {
 	b.copy_cells()
@@ -112,9 +110,12 @@ func (b *Board) change_life() {
 	}
 }
 
-func (b *Board) set_living_cells(cell_coords [][]int) {
-	for _, coord := range cell_coords {
-		b.make_cell_alive(coord[0], coord[1])
+
+func (b *Board) copy_cells() {
+	for row_index := range b.cells_current {
+		for col_index := range b.cells_current[row_index] {
+			b.cells_copy[row_index][col_index].copy_cell_data(b.cells_current[row_index][col_index])
+		}
 	}
 }
 
@@ -140,17 +141,26 @@ func clear_screen() {
 func main() {
 	var board Board
 	board.initialize(10,16)
-	// set up initial board configuration
-	// Pentadecathlon
-	board.set_living_cells([][]int{{3,5}, {3,10}, {4,3}, {4,4}, {4,6}, {4,7}, {4,8}, {4,9}, {4,11}, {4,12}, {5,5}, {5,10}})
-	// Glider
-	//board.set_living_cells([][]int{{2,1}, {2,2}, {2,3}, {1,3}, {0,2}})
-	board.print_board()
-	for i := 0; i < 100; i++ {
-		time.Sleep(10 * time.Millisecond)
-		board.change_life()
-		board.print_board()
-	}
+	 //set up initial board configuration
+	 //Pentadecathlon
+	//board.set_living_cells([][]int{{3,5}, {3,10}, {4,3}, {4,4}, {4,6}, {4,7}, {4,8}, {4,9}, {4,11}, {4,12}, {5,5}, {5,10}})
+	 //Glider
+	board.set_living_cells([][]int{{2,1}, {2,2}, {2,3}, {1,3}, {0,2}})
+	//board.print_board()
+	//for i := 0; i < 100; i++ {
+	//	time.Sleep(10 * time.Millisecond)
+	//	board.change_life()
+	//	board.print_board()
+	//}
+
+	//var s = fmt.Sprint(board.cells_current)
+	//fmt.Println(s)
+	//board.set_living_cells([][]int{{0,0},{1,1},{2,2}})
+	////board.make_cell_alive(1,1)
+	//a := board.live_sum(0,0)
+	//fmt.Println(board.cells_current)
+	fmt.Println(board.live_sum(2,3))
+
 }
 
 
