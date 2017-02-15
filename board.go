@@ -12,6 +12,7 @@ import (
 type Cell struct {
 	status int
 }
+
 func (c *Cell) make_alive() {
 	c.status = 1
 }
