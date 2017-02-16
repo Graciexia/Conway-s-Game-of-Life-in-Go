@@ -33,4 +33,4 @@ unnecessary garbage collection (at the expense of slightly more complicated code
 Conle this repo to your local machine.
 
 ## Run
-Just typing ` go run board.go  ` under `github.com/Graciexia/Conway-s-Game-of-Life-in-Go` derectory, it will run a game with all parameters set to their defaults.
+Just typing ` go run board.go  ` under `github.com/Graciexia/Conway-s-Game-of-Life-in-Go` derectory, it will run a game with all parameters set to their defaults(Pentadecathlon pattern).

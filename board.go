@@ -12,24 +12,24 @@ import (
 type Cell struct {
 	status int
 }
-func (c *Cell) make_alive() {
+func (c *Cell) MakeAlive() {
 	c.status = 1
 }
 
-func (c *Cell) kill() {
+func (c *Cell) Kill() {
 	c.status = 0
 }
 
-func (c *Cell) is_alive() bool {
+func (c *Cell) IsAlive() bool {
 	return (c.status == 1)
 }
 
-func (c *Cell) copy_cell_data(from_cell Cell) {
+func (c *Cell) CopyCellData(from_cell Cell) {
 	c.status = from_cell.status
 }
 
 //print cell format
-func (c *Cell) to_s() string {
+func (c *Cell) ToString() string {
 	if c.status == 1 {
 		return "*"
 	}
@@ -44,7 +44,7 @@ type Board struct {
 	cells_copy    [][]Cell
 }
 
-func (b *Board) initialize(rows, columns int) {
+func (b *Board) Initialize(rows, columns int) {
 	b.rows = rows
 	b.cols = columns
 	b.cells_current = make([][]Cell, b.rows)
@@ -53,30 +53,30 @@ func (b *Board) initialize(rows, columns int) {
 		b.cells_current[i] = make([]Cell, b.cols)
 		b.cells_copy[i] = make([]Cell, b.cols)
 	}
-	//for row_index := range b.cells_current {
-	//	for col_index := range b.cells_current[row_index] {
-	//		b.cells_current[row_index][col_index].kill()
-	//		b.cells_copy[row_index][col_index].kill()
-	//	}
-	//}
-}
-
-func (b *Board) set_living_cells(cell_coords [][]int) {
-	for _, coord := range cell_coords {
-		b.make_cell_alive(coord[0], coord[1])
+	for row_index := range b.cells_current {
+		for col_index := range b.cells_current[row_index] {
+			b.cells_current[row_index][col_index].Kill()
+			b.cells_copy[row_index][col_index].Kill()
+		}
 	}
 }
 
-func (b *Board) make_cell_alive(row_index, col_index int) {
-	b.cells_current[row_index][col_index].make_alive()
+func (b *Board) SetLivingCells(cell_coords [][]int) {
+	for _, coord := range cell_coords {
+		b.makeCellAlive(coord[0], coord[1])
+	}
 }
 
-func (b *Board) kill_cell(row_index, col_index int) {
-	b.cells_current[row_index][col_index].kill()
+func (b *Board) makeCellAlive(row_index, col_index int) {
+	b.cells_current[row_index][col_index].MakeAlive()
+}
+
+func (b *Board) killCell(row_index, col_index int) {
+	b.cells_current[row_index][col_index].Kill()
 }
 
 // always checks the copy
-func (b *Board) live_sum(row_index, col_index int) int {
+func (b *Board) liveSum(row_index, col_index int) int {
 	count := 0
 	start_row := row_index - 1; if start_row < 0 { start_row = 0 }
 	end_row := row_index + 2; if end_row > b.rows { end_row = b.rows }
@@ -84,55 +84,52 @@ func (b *Board) live_sum(row_index, col_index int) int {
 	end_col := col_index + 2; if end_col > b.cols { end_col = b.cols }
 	for _, row := range b.cells_copy[start_row:end_row] {
 		for _, cell := range row[start_col:end_col] {
-			if cell.is_alive() { count += 1 }
+			if cell.IsAlive() { count += 1 }
 		}
 	}
 	return count
 }
 
 // checks the copy but sets the current cells
-func (b *Board) make_live_or_kill(row_index, col_index int) {
-	total_live := b.live_sum(row_index, col_index)
+func (b *Board) makeLiveOrKill(row_index, col_index int) {
+	total_live := b.liveSum(row_index, col_index)
 	if total_live == 3 {
-		b.make_cell_alive(row_index, col_index)
+		b.makeCellAlive(row_index, col_index)
 	} else if total_live != 4 {
-		b.kill_cell(row_index, col_index)
+		b.killCell(row_index, col_index)
 	}
 }
 
-
-func (b *Board) change_life() {
-	b.copy_cells()
-	for row_index := range b.cells_copy {
-		for col_index := range b.cells_copy[row_index] {
-			b.make_live_or_kill(row_index, col_index)
-		}
-	}
-}
-
-
-func (b *Board) copy_cells() {
+func (b *Board) dupCurrentToCopy() {
 	for row_index := range b.cells_current {
 		for col_index := range b.cells_current[row_index] {
-			b.cells_copy[row_index][col_index].copy_cell_data(b.cells_current[row_index][col_index])
+			b.cells_copy[row_index][col_index].CopyCellData(b.cells_current[row_index][col_index])
 		}
 	}
 }
 
-func (b *Board) print_board() {
-	clear_screen()
+func (b *Board) ChangeLife() {
+	b.dupCurrentToCopy()
+	for row_index := range b.cells_current {
+		for col_index := range b.cells_current[row_index] {
+			b.makeLiveOrKill(row_index, col_index)
+		}
+	}
+}
+
+func (b *Board) PrintBoard() {
 	fmt.Println("+-" + strings.Repeat("--", b.cols) + "+")
 	for _, row := range b.cells_current {
 		fmt.Print("| ")
 		for _, cell := range row {
-			fmt.Print(cell.to_s() + " ")
+			fmt.Print(cell.ToString() + " ")
 		}
 		fmt.Println("|")
 	}
 	fmt.Println("+-" + strings.Repeat("--", b.cols) + "+")
 }
 
-func clear_screen() {
+func clearScreen() {
 	cmd := exec.Command("clear") //Linux example, its tested
 	cmd.Stdout = os.Stdout
 	cmd.Run()
@@ -140,17 +137,19 @@ func clear_screen() {
 
 func main() {
 	var board Board
-	board.initialize(10,16)
+	board.Initialize(10,16)
 	 //set up initial board configuration
 	 //Pentadecathlon
-	board.set_living_cells([][]int{{3,5}, {3,10}, {4,3}, {4,4}, {4,6}, {4,7}, {4,8}, {4,9}, {4,11}, {4,12}, {5,5}, {5,10}})
+	board.SetLivingCells([][]int{{3,5}, {3,10}, {4,3}, {4,4}, {4,6}, {4,7}, {4,8}, {4,9}, {4,11}, {4,12}, {5,5}, {5,10}})
 	 //Glider
 	//board.set_living_cells([][]int{{2,1}, {2,2}, {2,3}, {1,3}, {0,2}})
-	board.print_board()
+	clearScreen()
+	board.PrintBoard()
 	for i := 0; i < 100; i++ {
 		time.Sleep(10 * time.Millisecond)
-		board.change_life()
-		board.print_board()
+		board.ChangeLife()
+		clearScreen()
+		board.PrintBoard()
 	}
 }
 
