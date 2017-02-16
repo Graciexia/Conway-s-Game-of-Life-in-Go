@@ -27,7 +27,7 @@ func TestCell(t *testing.T) {
 	if c_copy.status != 1 {
 		t.Error("Expected 1, got ", c_copy.status)
 	}
-//test c.to_s()
+//test c.ToString()
 	if  c.ToString()!= "*" {
 		t.Error("Expected *, got ", c.ToString())
 	}
