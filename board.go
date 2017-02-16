@@ -138,15 +138,15 @@ func clearScreen() {
 func main() {
 	var board Board
 	board.Initialize(10,16)
-	 //set up initial board configuration
-	 //Pentadecathlon
+	//set up initial board configuration
+	//Pentadecathlon
 	board.SetLivingCells([][]int{{3,5}, {3,10}, {4,3}, {4,4}, {4,6}, {4,7}, {4,8}, {4,9}, {4,11}, {4,12}, {5,5}, {5,10}})
-	 //Glider
+	//Glider
 	//board.set_living_cells([][]int{{2,1}, {2,2}, {2,3}, {1,3}, {0,2}})
 	clearScreen()
 	board.PrintBoard()
 	for i := 0; i < 100; i++ {
-		time.Sleep(10 * time.Millisecond)
+		time.Sleep(100 * time.Millisecond)
 		board.ChangeLife()
 		clearScreen()
 		board.PrintBoard()

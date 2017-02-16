@@ -29,8 +29,23 @@ Besides that, the board needs two copies at any given time - one for the current
 creating the next generation. The avoid the need to create a new board every time, saving memory and avoiding
 unnecessary garbage collection (at the expense of slightly more complicated code).
 
-## Installation
-Conle this repo to your local machine.
+# Installation
 
-## Run
-Just typing ` go run board.go  ` under `github.com/Graciexia/Conway-s-Game-of-Life-in-Go` derectory, it will run a game with all parameters set to their defaults(Pentadecathlon pattern).
+## Running the Game on Mac OS X
+Clone the repository to an empty folder on your local machine with this command:  `git clone git@github.com:Graciexia/Conway-s-Game-of-Life-in-Go.git`.
+
+Then just type `./board` in the `Conway-s-Game-of-Life-in-Go`
+directory and the program should run.
+
+## Running the Game on other Operating Systems
+First, install `go` on your local machine. To do so,
+download the install files (https://golang.org/dl/) appropriate for your operating system and then follow the instructions.
+
+Then, clone the repository to an empty folder on your local machine with this command:  `git clone git@github.com:Graciexia/Conway-s-Game-of-Life-in-Go.git`.
+
+You may also need to set up an environment variable to point to the project path with:
+`export GOPATH=dir_path`, substituting `dir_path` with the full folder location
+you cloned to above.
+
+Lastly, in the `Conway-s-Game-of-Life-in-Go` directory, 
+just type `go run board.go`, and it will run the game with all parameters set to their defaults (Pentadecathlon pattern).
