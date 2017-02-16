@@ -73,17 +73,15 @@ func TestBoard(t *testing.T) {
 	}
 
 	b.dupCurrentToCopy()
-	if &b.cells_copy != &b.cells_current{
-		t.Error("Expected true, got ", false)
+	if fmt.Sprint(b.cells_copy) != fmt.Sprint(b.cells_current) {
+		t.Error("Expected copies to be the same")
 
 	}
-	//fmt.Println(&b.cells_copy)
-	//fmt.Println(&b.cells_current)
+
 	b.ChangeLife()
-	if &b.cells_copy == &b.cells_current{
-		t.Error("Expected false, got ", true)
+	if fmt.Sprint(b.cells_copy) == fmt.Sprint(b.cells_current) {
+		t.Error("Expected copies to be not the same")
 	}
-
 }
 
 func TestBoardMakeLiveOrKill(t *testing.T) {
