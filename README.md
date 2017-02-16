@@ -2,7 +2,7 @@
 The challenge was to write Conway's Game of Life in one of several languages, include Elm, Rust, Elixir, Clojure, Swift, 
 or Go within a 48 hours. 
 The final solution will be executable in some format and, ideally, will include automated unit tests.
-I started at 11:30 PM Feb 13rd
+I started at 11:30 PM Feb 13rd and finished at 9:30 pm Feb 15th.
 
 ## Problem Approach
 ##### analyze the problem to be resolved, as well as constraints (time, tools, etc.)
